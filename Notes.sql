@@ -100,8 +100,8 @@ VALUES
 	 ('LPR', 'Libreta profesional con rayas')
 	,('LPC', 'Libreta profesional a cuadros')
 	,('GM', 'Goma bicolor azul-rojo')
-	,('LPP', 'Lápiz profesional de puntillas')
-	,('HBC', 'Hoja blanca tamaño carta');
+	,('LPP', 'Lï¿½piz profesional de puntillas')
+	,('HBC', 'Hoja blanca tamaï¿½o carta');
 
 
 INSERT INTO [dbo].[Orders]
@@ -217,7 +217,7 @@ WHERE product_id = 4;
 
 
 UPDATE [dbo].[Products]
-SET product_description = 'Lápiz de puntillas finas'
+SET product_description = 'Lï¿½piz de puntillas finas'
 WHERE product_id = 4;
 
 
@@ -284,7 +284,7 @@ INSERT INTO [dbo].[Departments]
 VALUES 
  ('Sistemas')
 ,('Recursos Humanos')
-,('Producción')
+,('Producciï¿½n')
 ,('Ventas')
 ,('Compras');
 
@@ -376,3 +376,272 @@ FROM
 ORDER BY 
 		 [d].[department_name]
 		,[e].[employee_salary];
+
+
+/*
+	Lesson 10 - CONCAT AND ALIAS
+*/
+SELECT 
+	 [e].[employee_name] 
+	,[e].[employee_lastname]
+	,[e].[employee_name] + N' ' + [e].[employee_lastname]		AS [employee_fullName]
+	,CONCAT([e].[employee_name], N' ', [e].[employee_lastname])	AS [employee_fullName2]
+	,[e].[employee_salary]
+	,[e].[employee_createdDate]
+	,[d].[department_name]
+	,[d].[department_name]
+	+ '/' + [e].[employee_positionName]
+	+ '/' + CAST([e].[employee_salary] AS NVARCHAR(100))		AS [employee_fullinfo]	
+FROM 
+	[dbo].[Employees] AS [e]
+	INNER JOIN [dbo].[Departments] AS [d]
+	ON [e].[department_id] = [d].[department_id]
+ORDER BY 
+		 [employee_fullinfo];
+
+
+/*
+	Lesson 11 - TOP, DISTINCT, PERCENT
+*/
+SELECT
+	TOP(5) *
+FROM
+	[dbo].[Employees] AS [e]
+ORDER BY
+	[e].[employee_createdDate];
+
+
+SELECT
+	TOP 20 PERCENT *
+FROM
+	[dbo].[Employees] AS [e]
+ORDER BY
+	[e].[employee_createdDate];
+
+
+SELECT
+	DISTINCT [e].[employee_salary]
+FROM
+	[dbo].[Employees] AS [e];
+
+
+SELECT
+	DISTINCT [d].[department_name]
+FROM
+	[dbo].[Employees] AS [e]
+	INNER JOIN [dbo].[Departments] AS [d]
+	ON [e].[department_id] = [d].[department_id];
+
+
+
+/*
+	Lesson 12 - Comparison Operators
+*/
+-- =, >, <, >=, <=, <>
+
+SELECT 
+	*
+FROM 
+	[dbo].[Employees] AS [e]
+WHERE
+	[e].[employee_salary] = 750;
+
+
+SELECT 
+	*
+FROM 
+	[dbo].[Employees] AS [e]
+WHERE
+	[e].[employee_name] = 'Axel';
+
+
+SELECT 
+	*
+FROM 
+	[dbo].[Employees] AS [e]
+WHERE
+	[e].[employee_salary] > 500;
+
+
+/*
+	LecciÃ³n 13 - Logical Operators
+	ALL, ANY, AND, BETWEEN, EXISTS, IN, LIKE, NOT, OR, SOME
+*/
+
+INSERT INTO [dbo].[Employees]
+	(
+		 [employee_name]
+		,[employee_lastname]
+		,[employee_birthday]
+		,[employee_gender]
+		,[employee_salary]
+		,[employee_positionName]
+		,[department_id]
+	)
+VALUES
+ ('Manuel', 'Santos', '1991-01-27', 1, 635.50, 'Comprador Jr.', 5)
+,('Luis', 'Carranza', '1995-05-30', 1, 782, 'Comprador Sr.', 5)
+,('Mariana', 'Garza', '1993-07-15', 0, 750, 'Supervisor', 3)
+,('Ismael', 'Perez', '1993-06-22', 1, 600, 'Supervisor de Calidad', 3)
+,('Miguel', 'Rios', '1996-02-10', 1, 350, 'Ayudante General', 3)
+,('Emmanuel', 'Lara', '1996-03-20', 1, 350, 'Ayudante General', 3)
+,('Luis', 'Barrera', '1994-08-12', 1, 350, 'Ayudante General', 3)
+,('Veronica', 'Montes', '1993-07-08', 0, 350, 'Ayudante General', 3)
+,('Martha', 'Rojas', '1995-09-28', 0, 350, 'Desarrollador Web', 1)
+,('Merida', 'Rios', '1994-07-21', 0, 500, 'Nomina', 2);
+
+
+-- AND, OR, NOT, IN
+SELECT 
+	*
+FROM
+	[dbo].[Employees] AS [e]
+WHERE 
+	[e].[employee_salary] >= 300
+AND [e].[employee_salary] <= 500
+AND [e].department_id = 3
+AND [e].employee_gender = 1
+ORDER BY [e].[employee_salary]
+
+
+SELECT 
+	*
+FROM
+	[dbo].[Employees] AS [e]
+WHERE 
+	[e].[department_id] NOT IN (1,2,3)
+ORDER BY
+	[e].[department_id];
+
+
+SELECT 
+	*
+FROM
+	[dbo].[Employees] AS [e]
+WHERE 
+	(
+		[e].[employee_salary] >= 500
+		AND
+		[e].[employee_gender] = 1
+	)
+	OR
+	[e].[department_id] IN (4,5)
+ORDER BY
+	[e].[department_id];
+
+
+
+SELECT 
+	*
+FROM
+	[dbo].[Employees] AS [e]
+WHERE 
+	[e].[employee_gender] = 1
+	AND
+	(
+		[e].[employee_salary] <= 500
+		OR
+		[e].[department_id] IN (4,5)	
+	)
+	
+ORDER BY
+	[e].[department_id];
+
+--BETWEEN, LIKE, EXISTS
+SELECT 
+	 [e].[employee_name]
+	,[e].[employee_lastname]
+	,[e].[employee_birthday]
+	,[e].[employee_gender]
+	,[e].[employee_salary]
+	,[e].[employee_positionName]
+	,[e].[employee_createdDate]
+FROM
+	[dbo].[Employees] AS [e]
+WHERE
+	[e].[employee_birthday] BETWEEN '01-01-1990' AND '12-31-1993';
+	--[e].[employee_salary] BETWEEN 500 AND 600;
+
+
+SELECT 
+	 [e].[employee_name]
+	,[e].[employee_lastname]
+	,[e].[employee_birthday]
+	,[e].[employee_gender]
+	,[e].[employee_salary]
+	,[e].[employee_positionName]
+	,[e].[employee_createdDate]
+FROM
+	[dbo].[Employees] AS [e]
+WHERE
+	--[e].[employee_lastname] LIKE 'M%';
+	--[e].[employee_lastname] LIKE '%A';
+	--[e].[employee_name] LIKE '%A%'
+	--[e].[employee_lastname] LIKE '%_i_%'; //_ Indicate the positions after or before the letter
+	--[e].[employee_lastname] LIKE '[ER]%'; //[] Options, Start with E or R
+	--[e].[employee_lastname] LIKE '[A-R]%'; //List values between A and R
+	--[e].[employee_lastname] LIKE '[SZ]avaleta'; 
+	--[e].[employee_lastname] LIKE '[^gmlrpa]%'; //Without that values
+	--[e].[employee_lastname] LIKE '%[^aeiou]'; 
+	--[e].[employee_lastname] LIKE '?_%' ESCAPE '?'
+	
+	
+SELECT 
+	 [e].[employee_name]
+	,[e].[employee_lastname]
+	,[e].[employee_birthday]
+	,[e].[employee_gender]
+	,[e].[employee_salary]
+	,[e].[employee_positionName]
+	,[e].[employee_createdDate]
+	,[e].[department_id]
+FROM
+	[dbo].[Employees] AS [e]
+WHERE
+	(EXISTS
+		(
+			SELECT 
+				[d].[department_id]
+			FROM
+				[dbo].[Departments] AS [d]
+			WHERE
+				[d].[department_id] = [e].[department_id]
+				AND
+				[d].[department_id] IN (2,3)
+		)
+	);
+	
+	
+	
+SELECT 
+	 [e].[employee_name]
+	,[e].[employee_lastname]
+	,[e].[employee_birthday]
+	,[e].[employee_gender]
+	,[e].[employee_salary]
+	,[e].[employee_positionName]
+	,[e].[employee_createdDate]
+	,[e].[department_id]
+	,[d].[department_name]
+FROM
+	[dbo].[Employees] AS [e]
+	INNER JOIN [dbo].[Departments] AS [d]
+	ON [e].[department_id] = [d].[department_id]
+WHERE
+	[e].[department_id]
+	IN
+	(
+		SELECT 
+			[d].[department_id]
+		FROM
+			[dbo].[Departments] AS [d]	
+		WHERE 
+			[d].[department_name] LIKE '%as'
+	);
+
+
+SELECT
+	*
+FROM
+	[dbo].[OrderDetails]
+WHERE [order_id] = ANY/SOME (SELECT [order_id] FROM [dbo].[Orders]);
