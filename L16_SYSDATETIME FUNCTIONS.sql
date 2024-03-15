@@ -1,5 +1,5 @@
 /*
-	Lección 16 - Funciones de FECHA y HORA
+	Lesson #16 - Funciones de FECHA y HORA
 */
 
 

@@ -1,5 +1,5 @@
 /*
-	Lesson 9 - ORDER BY
+	Lesson #9 - ORDER BY
 */
 DROP TABLE [dbo].[Employees];
 

@@ -1,5 +1,5 @@
 /*
-	Lesson 10 - CONCAT AND ALIAS
+	Lesson #10 - CONCAT AND ALIAS
 */
 SELECT 
 	 [e].[employee_name] 

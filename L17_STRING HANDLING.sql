@@ -1,5 +1,5 @@
 /*
-	Lección 17 - Manejo de cadenas LEN, LEFT, RIGHT, UPPER, LOWER, ETC
+	Lesson #17 - Manejo de cadenas LEN, LEFT, RIGHT, UPPER, LOWER, ETC
 */
 
 --1. LENGHT

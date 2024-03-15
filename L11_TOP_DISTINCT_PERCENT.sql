@@ -1,5 +1,5 @@
 /*
-	Lesson 11 - TOP, DISTINCT, PERCENT
+	Lesson #11 - TOP, DISTINCT, PERCENT
 */
 SELECT
 	TOP(5) *

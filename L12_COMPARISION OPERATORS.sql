@@ -1,5 +1,5 @@
 /*
-	Lesson 12 - Comparison Operators
+	Lesson #12 - Comparison Operators
 */
 -- =, >, <, >=, <=, <>
 

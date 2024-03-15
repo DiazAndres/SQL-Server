@@ -1,5 +1,5 @@
 /*
-	Lección 13 - Logical Operators
+	Lesson #13 - Logical Operators
 	ALL, ANY, AND, BETWEEN, EXISTS, IN, LIKE, NOT, OR, SOME
 */
 
