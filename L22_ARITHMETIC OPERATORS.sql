@@ -3,7 +3,6 @@
 */
 --Aritmetic Operators
 
---SUMA
 SELECT 2 + 2 AS SUMA
 SELECT 2 - 2 AS RESTA
 SELECT 2 * 2 AS MULTIPLICACION
